@@ -1,0 +1,18 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src", // Establece el directorio base para las rutas relativas
+    "paths": {
+      "@/*": ["./src/*"] // Define el alias '@' como el directorio 'src'
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2020",
+    "moduleResolution": "bundler",
+    "module": "ESNext"
+  }
+}
