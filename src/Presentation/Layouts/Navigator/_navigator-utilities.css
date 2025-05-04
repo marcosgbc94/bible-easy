@@ -1,0 +1,38 @@
+@layer utilities {
+    .navigator-width {
+        width: var(--navigator-width);
+    }
+
+    .navigator-height {
+        height: var(--navigator-height);
+    }
+
+    .navigator-left {
+        left: var(--navigator-left);
+    }
+
+    .navigator-bottom {
+        bottom: var(--navigator-bottom);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+    @layer utilities {
+        .navigator-width {
+            width: var(--navigator-width-mobile);
+        }
+    
+        .navigator-height {
+            height: var(--navigator-height-mobile);
+        }
+    
+        .navigator-left {
+            left: var(--navigator-left-mobile);
+        }
+    
+        .navigator-bottom {
+            bottom: var(--navigator-bottom-mobile);
+        }
+    }
+}

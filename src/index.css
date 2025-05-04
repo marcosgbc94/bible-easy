@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@theme {
+    /* NAVIGATOR THEME */
+    --navigator-height: 50px;
+    --navigator-width: 400px;
+    --navigator-left: calc(50% - (var(--navigator-width) / 2));
+    --navigator-bottom: 10px;
+    /* NAVIGATOR THEME MOBILE */
+    --navigator-height-mobile: 50px;
+    --navigator-width-mobile: calc(100% - (var(--navigator-left-mobile) * 2));
+    --navigator-left-mobile: 10px;
+    --navigator-bottom-mobile: 10px;
+}
+
+/* Layouts imports */
+
+@import "./Presentation/Layouts/Navigator/_navigator-utilities.css";

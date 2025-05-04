@@ -1,4 +1,4 @@
-import { BibleModel } from '@/Infrastructure/Model/BibleModel';
+import { BibleModel } from '@/Data/Model/BibleModel';
 
 export interface BibleDataSource {
     getBible(): Promise<BibleModel>;

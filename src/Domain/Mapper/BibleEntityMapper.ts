@@ -1,5 +1,5 @@
 import { BibleEntity } from '@/Domain/Entity/BibleEntity';
-import { BibleModel } from '@/Infrastructure/Model/BibleModel';
+import { BibleModel } from '@/Data/Model/BibleModel';
 import { BookEntityMapper } from '@/Domain/Mapper/BookEntityMapper';
 
 export const BibleEntityMapper = (bible: BibleModel): BibleEntity => ({

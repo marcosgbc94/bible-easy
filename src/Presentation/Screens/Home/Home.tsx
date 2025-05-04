@@ -1,17 +1,28 @@
-// src/Presentation/Home/Home.tsx
-import { HomeViewModel } from "@/Presentation/Screens/Home/HomeViewModel";
+import { HomeViewModel } from '@/Presentation/Screens/Home/HomeViewModel';
+import { Navigator } from "@/Presentation/Layouts/Navigator/Navigator";
 
 export const Home = () => {
-  const { books, loading } = HomeViewModel();
+  const { books, book, chapter, loading, selectBook, selectChapter } = HomeViewModel();
 
-  if (loading) return <p>Cargando libros...</p>;
+  const selectReadingHandler = (element: number, type: 'books' | 'chapters' | 'verses') => {
+    switch (type) {
+      case "books":
+        selectBook(element);
+        break;
+      case "chapters":
+        selectChapter(book.id, element);
+        break;
+    }
+}
 
   return (
-    <div>
-      <h1>Libros de la Biblia</h1>
-      <ul>
-        {books.name}
-      </ul>
+    <div className="fixed w-full h-full bg-slate-50">
+      {loading && <p>Cargando...</p>}
+  
+      {!loading && books.length > 0 && (
+        <Navigator bookList={books} bookSelected={book} chapterSelected={chapter} onSelect={selectReadingHandler} />
+      )}
     </div>
-  );
+  );  
+
 };

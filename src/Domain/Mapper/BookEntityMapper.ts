@@ -1,5 +1,5 @@
 import { BookEntity } from '@/Domain/Entity/BookEntity';
-import { BookModel } from '@/Infrastructure/Model/BookModel';
+import { BookModel } from '@/Data/Model/BookModel';
 import { ChapterEntityMapper } from '@/Domain/Mapper/ChapterEntityMapper';
 
 export const BookEntityMapper = (book: BookModel): BookEntity => ({

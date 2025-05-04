@@ -1,7 +1,9 @@
 import { VerseEntity } from '@/Domain/Entity/VerseEntity';
-import { VerseModel } from '@/Infrastructure/Model/VerseModel';
+import { VerseModel } from '@/Data/Model/VerseModel';
 
-export const VerseEntityMapper = (Verse: VerseModel): VerseEntity => ({
-    title: Verse.title,
-    content: Verse.content
+export const VerseEntityMapper = (verse: VerseModel): VerseEntity => ({
+    id: verse.id,
+    number: verse.number,
+    title: verse.title,
+    content: verse.content
 });
