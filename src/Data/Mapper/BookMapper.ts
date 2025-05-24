@@ -6,6 +6,7 @@ export const BookMapper = (book: any): BookModel => ({
     name: book.name,
     abbreviation: book.abbreviation,
     location: book.location,
+    chaptersLength: book.chapters.length,
     chapters: book.chapters.map(ChapterMapper),
 });
   

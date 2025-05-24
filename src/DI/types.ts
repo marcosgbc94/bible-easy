@@ -1,9 +1,15 @@
 export const TYPES = {
     BibleDataSource: Symbol.for("BibleDataSource"),
+    ReadingDataSource: Symbol.for("ReadingDataSource"),
     BibleRepository: Symbol.for("BibleRepository"),
-    FindAllBooks: Symbol.for("FindAllBooks"),
-    FindBookById: Symbol.for("FindBookById"),
-    FindChapterById: Symbol.for("FindChapterById"),
-    FindChaptersByBook: Symbol.for("FindChaptersByBook"),
+    ReadingRepository: Symbol.for("ReadingRepository"),
+
+    GetAllBooks: Symbol.for("GetAllBooks"),
+    GetAllChapters: Symbol.for("GetAllChapters"),
+    GetBook: Symbol.for("GetBook"),
+    AddReading: Symbol.for("AddReading"),
+    EditReading: Symbol.for("EditReading"),
+    GetAllReadings: Symbol.for("GetAllReadings"),
+    GetNextIdReading: Symbol.for("GetNextIdReading"),
 };
   

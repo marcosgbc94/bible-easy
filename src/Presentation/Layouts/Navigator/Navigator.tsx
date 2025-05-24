@@ -1,29 +1,46 @@
 import { SelectReading } from "@/Presentation/Components/SelectReading";
-import { BookEntity } from '@/Domain/Entity/BookEntity';
-import { ChapterEntity } from '@/Domain/Entity/ChapterEntity';
+import { BookModel } from '@/Data/Model/BookModel';
+import { ChapterModel } from '@/Data/Model/ChapterModel';
+import { VerseModel } from "@/Data/Model/VerseModel";
+import { CiBoxList } from "react-icons/ci";
+import { CiCirclePlus } from "react-icons/ci";
 
 export type NavigatorProps = {
-    bookList: BookEntity[]; 
-    bookSelected: BookEntity; 
-    chapterSelected: ChapterEntity; 
+    books: BookModel[]; 
+    chapters: ChapterModel[]; 
+    verses: VerseModel[]; 
+    bookSelected: BookModel; 
+    chapterSelected: ChapterModel;
+    verseSelected: VerseModel
     onSelect: (element: number, type: string) => void;
+    onAddReading: () => void,
+    onToggleReadingsLayer: () => void
 };
 
-export const Navigator = ({bookList, bookSelected, chapterSelected, onSelect}: NavigatorProps) => {
+export const Navigator = ({books, chapters, verses, bookSelected, chapterSelected, verseSelected, onSelect, onAddReading, onToggleReadingsLayer}: NavigatorProps) => {
+
     return (
         <nav
-            className="absolute navigator-width navigator-height navigator-left navigator-bottom bg-slate-200 rounded-xl flex justify-center items-center"
+            className="absolute navigator-width navigator-height navigator-left navigator-bottom bg-slate-200 rounded-xl flex justify-center items-center gap-2 p-2"
         >
-            {bookList?.length > 0 && (
-                <SelectReading type="books" list={bookList} selectedId={bookSelected.id ?? 1} onSelect={onSelect} />
+            <button type="button" className="bg-blue-300 rounded-lg h-full p-2" onClick={onAddReading}>
+                <CiCirclePlus />
+            </button>
+
+            <button type="button" className="bg-green-300 rounded-lg h-full p-2" onClick={onToggleReadingsLayer}>
+                <CiBoxList />
+            </button>
+
+            {books?.length > 0 && (
+                <SelectReading type="books" list={books} selectedId={bookSelected && bookSelected.id || 0} onSelect={onSelect} />
             )}
 
-            {bookSelected?.chapters?.length > 0 && (
-                <SelectReading type="chapters" list={bookSelected && bookSelected.chapters} selectedId={chapterSelected.id ?? 1} onSelect={onSelect} />
+            {chapters?.length > 0 && (
+                <SelectReading type="chapters" list={bookSelected && chapters} selectedId={chapterSelected && chapterSelected.id || 0} onSelect={onSelect} />
             )}
 
-            {chapterSelected?.verses?.length > 0 && (
-                <SelectReading type="verses" list={chapterSelected && chapterSelected.verses} selectedId="1" onSelect={onSelect} />
+            {verses?.length > 0 && (
+                <SelectReading type="verses" list={chapterSelected && verses} selectedId={verseSelected && verseSelected.id || 0} onSelect={onSelect} />
             )}
         </nav>
     );

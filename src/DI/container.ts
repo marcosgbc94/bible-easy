@@ -1,20 +1,35 @@
 import { Container } from "inversify";
 import { BibleRepository } from "@/Domain/Repository/BibleRepository";
 import { BibleRepositoryImp } from "@/Data/Repository/BibleRepositoryImp";
+import { ReadingRepository } from "@/Domain/Repository/ReadingRepository";
+import { ReadingRepositoryImp } from "@/Data/Repository/ReadingRepositoryImp";
 import { BibleDataSource } from "@/Domain/DataSource/BibleDataSource";
 import { BibleDataSourceImp } from "@/Data/DataSource/BibleDataSourceImp";
-import { FindAllBooks } from "@/Domain/UseCase/FindAllBooks";
-import { FindBookById } from "@/Domain/UseCase/FindBookById";
-import { FindChapterById } from "@/Domain/UseCase/FindChapterById";
+import { ReadingDataSource } from "@/Domain/DataSource/ReadingDataSource";
+import { ReadingDataSourceImp } from "@/Data/DataSource/ReadingDataSourceImp";
 import { TYPES } from "@/DI/types";
+import { GetAllBooks } from "../Domain/UseCases/GetAllBooks";
+import { AddReading } from "../Domain/UseCases/AddReading";
+import { GetAllReadings } from "../Domain/UseCases/GetAllReadings";
+import { GetNextIdReading } from "../Domain/UseCases/GetNextIdReading";
+import { GetBook } from "../Domain/UseCases/GetBook";
+import { EditReading } from "../Domain/UseCases/EditReading";
+import { GetAllChapters } from "../Domain/UseCases/GetAllChapters";
 
 const container = new Container();
 
 // Registro de dependencias en el contenedor
-container.bind<BibleDataSource>(TYPES.BibleDataSource).to(BibleDataSourceImp);  // Registrar la implementación
-container.bind<BibleRepository>(TYPES.BibleRepository).to(BibleRepositoryImp);  // Registrar el repositorio
-container.bind<FindAllBooks>(TYPES.FindAllBooks).to(FindAllBooks);
-container.bind<FindBookById>(TYPES.FindBookById).to(FindBookById);
-container.bind<FindChapterById>(TYPES.FindChapterById).to(FindChapterById);
+container.bind<BibleDataSource>(TYPES.BibleDataSource).to(BibleDataSourceImp);
+container.bind<ReadingDataSource>(TYPES.ReadingDataSource).to(ReadingDataSourceImp);
+container.bind<BibleRepository>(TYPES.BibleRepository).to(BibleRepositoryImp);
+container.bind<ReadingRepository>(TYPES.ReadingRepository).to(ReadingRepositoryImp);
+
+container.bind<GetAllBooks>(TYPES.GetAllBooks).to(GetAllBooks);
+container.bind<GetAllChapters>(TYPES.GetAllChapters).to(GetAllChapters);
+container.bind<GetBook>(TYPES.GetBook).to(GetBook);
+container.bind<AddReading>(TYPES.AddReading).to(AddReading);
+container.bind<EditReading>(TYPES.EditReading).to(EditReading);
+container.bind<GetAllReadings>(TYPES.GetAllReadings).to(GetAllReadings);
+container.bind<GetNextIdReading>(TYPES.GetNextIdReading).to(GetNextIdReading);
 
 export { container };

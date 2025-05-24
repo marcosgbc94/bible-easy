@@ -1,19 +1,19 @@
 import { BibleRepository } from "@/Domain/Repository/BibleRepository";
-import { BibleDataSource } from "@/Domain/DataSource/BibleDataSource";  // Interfaz en lugar de la implementación
-import { BibleEntity } from "@/Domain/Entity/BibleEntity";
+import { BibleDataSource } from "@/Data/DataSource/BibleDataSource";
+import { BibleModel } from "@/Data/Model/BibleModel";
 import { BibleMapper } from "@/Data/Mapper/BibleMapper";
-import { BookEntity } from "@/Domain/Entity/BookEntity";
+import { BookModel } from "@/Data/Model/BookModel";
 import { BookMapper } from "@/Data/Mapper/BookMapper";
-import { ChapterEntity } from "@/Domain/Entity/ChapterEntity";
+import { ChapterModel } from "@/Data/Model/ChapterModel";
 import { ChapterMapper } from "@/Data/Mapper/ChapterMapper";
-import { VerseEntity } from "@/Domain/Entity/VerseEntity";
+import { VerseModel } from "@/Data/Model/VerseModel";
 import { VerseMapper } from "@/Data/Mapper/VerseMapper";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@/DI/types";
 
 @injectable()
 export class BibleRepositoryImp implements BibleRepository {
-    private bibleDataSource: BibleDataSource;  // Utilizar la interfaz
+    private bibleDataSource: BibleDataSource;
 
     constructor(
         @inject(TYPES.BibleDataSource) bibleDataSource: BibleDataSource  // Inyección de la interfaz
@@ -21,57 +21,76 @@ export class BibleRepositoryImp implements BibleRepository {
         this.bibleDataSource = bibleDataSource;  // Asignar la instancia de BibleDataSource
     }
 
-    public async getBible(): Promise<BibleEntity> {
+    public async getBible(): Promise<BibleModel> {
         try {
-            const bibleModel = await this.bibleDataSource.getBible(); // obtiene un BibleModel
-            return BibleMapper(bibleModel); // convierte a BibleEntity
+            const bible = await this.bibleDataSource.getBible();
+
+            return BibleMapper(bible);
         } catch (error) {
-            throw new Error(`Error al obtener la Biblia: ${error.message}`);
+            
         }
     }
 
-    public async getBookById(id: number): Promise<BookEntity> {
+    public async getBooks(): Promise<BookModel[]> {
         try {
-            const bibleDataJSON = await this.bibleDataSource.getBible(); // obtenemos los datos de la Biblia
-            const bookData = bibleDataJSON.books.find((book: any) => book.id === id); // buscar el libro por ID
+            const bible = await this.getBible();
 
-            if (!bookData) {
-                throw new Error('Libro no encontrado');
-            }
-
-            return BookMapper(bookData); // mapea a BookEntity
+            return bible.books.map(book => BookMapper(book));
         } catch (error) {
-            throw new Error(`Error al obtener el libro con ID ${id}: ${error.message}`);
+            return [];
         }
     }
 
-    public async getChapterById(bookId: number, chapterId: number): Promise<ChapterEntity> {
-        const bibleDataJSON = await this.getBible();
-    
-        // Buscar el libro por ID
-        const bookData = bibleDataJSON.books.find((book: any) => book.id === bookId);
-        if (!bookData) {
-            throw new Error('Libro no encontrado');
+    public async getChapters(bookId: number): Promise<BookModel[]> {
+        try {
+            const book = await this.getBookById(bookId);
+
+            return book.chapters.map(chapter => ChapterMapper(chapter));
+        } catch (error) {
+            return [];
         }
-    
-        // Buscar el capítulo dentro del libro
-        const chapterData = bookData.chapters.find((chapter: any) => chapter.id === chapterId);
-        if (!chapterData) {
-            throw new Error('Capítulo no encontrado');
+    }
+
+    public async getVerses(bookId: number, chapterId: number): Promise<BookModel[]> {
+        try {
+            const chapter = await this.getChapterById(bookId, chapterId);
+
+            return chapter.verses.map(verse => VerseMapper(verse));
+        } catch (error) {
+            return [];
         }
-    
-        return ChapterMapper(chapterData);
+    }
+
+    public async getBookById(bookId: number): Promise<BookModel> {
+        try {
+            const bible = await this.getBible();
+            const book = bible.books.find((book: any) => book.id === bookId);
+
+            return BookMapper(book);
+        } catch (error) {
+            
+        }
+    }
+
+    public async getChapterById(bookId: number, chapterId: number): Promise<ChapterModel> {
+        try {
+            const book = await this.getBookById(bookId);
+            const chapter = book.chapters.find((chapter: any) => chapter.id === chapterId);
+
+            return ChapterMapper(chapter);
+        } catch (error) {
+            
+        }
     }
     
-    public async getVerseById(bookId: number, chapterId: number, verseId: number): Promise<VerseEntity> {
-        const chapterData = await this.getChapterById(bookId, chapterId);
-    
-        // Buscar el versículo dentro del capítulo
-        const verseData = chapterData.verses.find((verse: any) => verse.id === verseId);
-        if (!verseData) {
-            throw new Error('Versículo no encontrado');
+    public async getVerseById(bookId: number, chapterId: number, verseId: number): Promise<VerseModel> {
+        try {
+            const chapter = await this.getChapterById(bookId, chapterId);
+            const verse = chapter.verses.find((verse: any) => verse.id === verseId);
+        
+            return VerseMapper(verse);
+        } catch (error) {
+            
         }
-    
-        return VerseMapper(verseData);
     }    
 }

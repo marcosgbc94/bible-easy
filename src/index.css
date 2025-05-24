@@ -2,7 +2,7 @@
 
 @theme {
     /* NAVIGATOR THEME */
-    --navigator-height: 50px;
+    --navigator-height: 54px;
     --navigator-width: 400px;
     --navigator-left: calc(50% - (var(--navigator-width) / 2));
     --navigator-bottom: 10px;
@@ -11,8 +11,20 @@
     --navigator-width-mobile: calc(100% - (var(--navigator-left-mobile) * 2));
     --navigator-left-mobile: 10px;
     --navigator-bottom-mobile: 10px;
+
+    /* READINGS LIST THEME */
+    --readings-list-height: 100px;
+    --readings-list-width: 400px;
+    --readings-list-left: calc(50% - (var(--readings-list-width) / 2));
+    --readings-list-bottom: calc(20px + var(--navigator-height));
+    /* READINGS LIST THEME MOBILE */
+    --readings-list-height-mobile: 50px;
+    --readings-list-width-mobile: calc(100% - (var(--readings-list-left-mobile) * 2));
+    --readings-list-left-mobile: 10px;
+    --readings-list-bottom-mobile: calc(20px + var(--navigator-height));
 }
 
 /* Layouts imports */
 
 @import "./Presentation/Layouts/Navigator/_navigator-utilities.css";
+@import "./Presentation/Layouts/ReadingsList/_readings-list-utilities.css";

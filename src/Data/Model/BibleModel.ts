@@ -1,4 +1,4 @@
-import { BookModel } from '@/Infraesctructure/Model/BookModel';
+import { BookModel } from '@/Data/Model/BookModel';
 
 export interface BibleModel {
     name: string;

@@ -1,10 +1,11 @@
 import { BibleRepository } from "@/Domain/Repository/BibleRepository";
-import { BookEntity } from "@/Domain/Entity/BookEntity";
+import { Book } from "@/Domain/Entity/Book";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@/DI/types";
+import { BookMapper } from "@/Domain/Mappers/BookMapper";
 
 @injectable()
-export class FindAllBooks {
+export class GetAllBooks {
     private bibleRepository: BibleRepository;
 
     constructor (
@@ -13,12 +14,11 @@ export class FindAllBooks {
         this.bibleRepository = bibleRepository;
     }
 
-    // Método para obtener todos los libros
-    public async execute(): Promise<BookEntity[]> {
+    public async execute(): Promise<Book[]> {
         try {
-            const bible = await this.bibleRepository.getBible();
+            const books = await this.bibleRepository.getBooks();
             
-            return bible.books;  // Devuelve todos los libros de la Biblia
+            return books.map(book => BookMapper(book));
         } catch (error) {
             throw new Error('Error al obtener los libros');
         }

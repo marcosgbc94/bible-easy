@@ -1,0 +1,38 @@
+@layer utilities {
+    .readings-list-width {
+        width: var(--readings-list-width);
+    }
+
+    .readings-list-height {
+        height: var(--readings-list-height);
+    }
+
+    .readings-list-left {
+        left: var(--readings-list-left);
+    }
+
+    .readings-list-bottom {
+        bottom: var(--readings-list-bottom);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+    @layer utilities {
+        .readings-list-width {
+            width: var(--readings-list-width-mobile);
+        }
+
+        .readings-list-height {
+            height: var(--readings-list-height-mobile);
+        }
+    
+        .readings-list-left {
+            left: var(--readings-list-left-mobile);
+        }
+    
+        .readings-list-bottom {
+            bottom: var(--readings-list-bottom-mobile);
+        }
+    }
+}

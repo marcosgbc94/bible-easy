@@ -1,4 +1,4 @@
-export interface VerseEntity {
+export interface Verse {
     id: number,
     number: number,
     title: string,
