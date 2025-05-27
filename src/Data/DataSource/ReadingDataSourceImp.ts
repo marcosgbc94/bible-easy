@@ -13,7 +13,7 @@ export class ReadingDataSourceImp implements ReadingDataSource {
             if (!dataString) {
                 return []; 
             }
-
+            
             return JSON.parse(dataString); 
         } catch (error) {
             return []; 

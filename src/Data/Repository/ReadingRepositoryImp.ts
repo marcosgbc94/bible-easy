@@ -28,7 +28,7 @@ export class ReadingRepositoryImp implements ReadingRepository {
         try {
             const readings = await this.readingDataSource.selectAllReadings();
             
-            return ReadingMapper(readings.map(reading => reading.id === id));
+            return ReadingMapper(readings.find(reading => reading.id === id));
         } catch (error) {
             return []; 
         }

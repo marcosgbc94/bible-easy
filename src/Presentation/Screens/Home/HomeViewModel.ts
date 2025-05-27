@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import * as HomeControllers from "@/Presentation/Screens/Home/HomeControllers";
 import * as Utilities from "@/Presentation/Screens/Home/Utilities";
-import { BookModel } from "@/Data/Model/BookModel";
-import { ChapterModel } from "@/Data/Model/ChapterModel";
-import { VerseModel } from "@/Data/Model/VerseModel";
 import { Reading } from "@/Presentation/types";
 import { Book } from "../../../Domain/Entities/Book";
 import { Chapter } from "../../../Domain/Entities/Chapter";
@@ -12,13 +9,13 @@ import { Verse } from "../../../Domain/Entities/Verse";
 export const HomeViewModel = () => {
     const [loading, setLoading] = useState(true);
 
-    const [books, setBooks] = useState<BookModel[]>([]);
-    const [chapters, setChapters] = useState<ChapterModel[]>([]);
-    const [verses, setVerses] = useState<VerseModel[]>([]);
+    const [books, setBooks] = useState<Book[]>([]);
+    const [chapters, setChapters] = useState<Chapter[]>([]);
+    const [verses, setVerses] = useState<Verse[]>([]);
 
-    const [book, setBook] = useState<BookModel>([]);
-    const [chapter, setChapter] = useState<ChapterModel>([]);
-    const [verse, setVerse] = useState<VerseModel>([]);
+    const [book, setBook] = useState<Book>();
+    const [chapter, setChapter] = useState<Chapter>();
+    const [verse, setVerse] = useState<Verse>();
 
     const [readings, setReading] = useState<Reading>([]);
     const [currentReading, setCurrentReading] = useState<Number>(0);
@@ -46,6 +43,8 @@ export const HomeViewModel = () => {
      * @param bookId Identificador del libro
      */
     const handleSelectBook = async (bookId: number) => {
+        if (!bookId) return null;
+        
         setLoading(true);
 
         const book = await HomeControllers.getBook(bookId);
@@ -53,8 +52,10 @@ export const HomeViewModel = () => {
             id: currentReading,
             book: book
         }
-        console.log(editedReading)
+        
         HomeControllers.editReading(editedReading);
+
+        setBook(book);
         
         setChapters(await HomeControllers.getAllChaptersFromBook(bookId));
 
@@ -65,6 +66,9 @@ export const HomeViewModel = () => {
      * READING HANDLERS
      ***********************************************/
 
+    /**
+     * Manejador de cargar de lectura al inicio de la aplicación
+     */
     const handleLoadReadingInLocal = async () => {
         setLoading(true);
 
@@ -72,11 +76,24 @@ export const HomeViewModel = () => {
 
         if (readingLoaded.length) {
             setReading(readingLoaded);
+            const maxId = await HomeControllers.getNextIdReading();
+            const lastSelectedReading = await HomeControllers.getReading(maxId - 1);
+            console.log(lastSelectedReading)
+            setCurrentReading(maxId - 1);
+            handleSelectBook(lastSelectedReading.book.id);
         } else {
             handleAddReading();
         }
 
         setLoading(false);
+    }
+
+    /**
+     * Obtiene la lectura activa localmente
+     * @returns Reading
+     */
+    const handleGetCurrentReading = (): Reading => {
+        return readings.filter(reading => reading.id === currentReading);
     }
 
     /**
@@ -156,7 +173,7 @@ export const HomeViewModel = () => {
         setLoading(false);
     }
 
-    const handleGetCurrentReading = () => {
+    const handleGetCurrentReading2 = () => {
         return Utilities.getReading(currentReading, setCurrentReading);
     }
 

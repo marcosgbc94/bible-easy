@@ -65,6 +65,16 @@ export const getReadings = async () : Promise<Reading[]> => {
 }
 
 /**
+ * Obtiene una determinada lectura
+ * @param id Identificador de lectura
+ * @returns Promise<Reading[]>
+ */
+export const getReading = async (id: Number) : Promise<Reading[]> => {
+    const getReadingUseCase = container.get<ReadingRepository>(TYPES.GetReading);
+    return await getReadingUseCase.execute(id);
+}
+
+/**
  * Agrega una lectura
  * @param reading Lectura a agregar
  * @returns Promise<Boolean>

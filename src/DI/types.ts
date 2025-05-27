@@ -11,5 +11,6 @@ export const TYPES = {
     EditReading: Symbol.for("EditReading"),
     GetAllReadings: Symbol.for("GetAllReadings"),
     GetNextIdReading: Symbol.for("GetNextIdReading"),
+    GetReading: Symbol.for("GetReading"),
 };
   

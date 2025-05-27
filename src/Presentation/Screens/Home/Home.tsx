@@ -15,7 +15,7 @@ export const Home = () => {
     addReading();
   }
 
- 
+
 
   const selectReadingHandler = (element: number, type: 'books' | 'chapters' | 'verses') => {
     switch (type) {
@@ -42,7 +42,7 @@ export const Home = () => {
             chapters={chapters}
             verses={verses}
 
-            bookSelected={handleGetCurrentReading && handleGetCurrentReading.book} 
+            bookSelected={book && book} 
             chapterSelected={handleGetCurrentReading && handleGetCurrentReading.chapter} 
             verseSelected={handleGetCurrentReading && handleGetCurrentReading.verse} 
 

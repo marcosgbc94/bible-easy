@@ -15,6 +15,7 @@ import { GetNextIdReading } from "../Domain/UseCases/GetNextIdReading";
 import { GetBook } from "../Domain/UseCases/GetBook";
 import { EditReading } from "../Domain/UseCases/EditReading";
 import { GetAllChapters } from "../Domain/UseCases/GetAllChapters";
+import { GetReading } from "../Domain/UseCases/getReading";
 
 const container = new Container();
 
@@ -31,5 +32,6 @@ container.bind<AddReading>(TYPES.AddReading).to(AddReading);
 container.bind<EditReading>(TYPES.EditReading).to(EditReading);
 container.bind<GetAllReadings>(TYPES.GetAllReadings).to(GetAllReadings);
 container.bind<GetNextIdReading>(TYPES.GetNextIdReading).to(GetNextIdReading);
+container.bind<GetReading>(TYPES.GetReading).to(GetReading);
 
 export { container };
